@@ -8,23 +8,27 @@ server {
 
     location / {
         proxy_pass http://cinekwok_chn;
-        proxy_set_header Host ${NGINX_HOST};
+        #proxy_set_header HOST ${CINEKWOK_HOST};
     }
 
     location /eng/ {
     #location ~* ^\/eng\/* {
         proxy_pass http://cinekwok_eng/;
-        proxy_set_header Host ${NGINX_HOST};
+        #proxy_set_header HOST ${CINEKWOK_HOST};
     }
 
 }
 
 server {
     listen 80;
+    listen 443 ssl;
+    ssl_certificate /etc/nginx/certs/cinekwok.com.cer;
+    ssl_certificate_key /etc/nginx/certs/cinekwok.com.key;
+    ssl_password_file /etc/nginx/certs/ssl_passwords.txt;
     server_name farflunginfo.cinekwok.com;
 
     location / {
         proxy_pass http://drkweb;
-        proxy_set_header Host ${FARFLUNGINFO_HOST};
+        proxy_set_header HOST ${FARFLUNGINFO_HOST};
     }
 }
