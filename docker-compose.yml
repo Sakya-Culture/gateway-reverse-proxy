@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  nginx-proxy:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - shared_proxy_network
+    volumes:
+      - ./config:/etc/nginx/templates
+      - ./ssl:/etc/nginx/certs
+    environment:
+      - CINEKWOK_HOST=cinekwok.com
+      - FARFLUNGINFO_HOST=farflunginfo.cinekwok.com
+      - NGINX_PORT=80
+    command: /bin/bash -c "envsubst < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+networks:
+  shared_proxy_network:
+    external: true
