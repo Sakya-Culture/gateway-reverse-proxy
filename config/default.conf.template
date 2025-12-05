@@ -32,3 +32,42 @@ server {
         proxy_set_header HOST ${FARFLUNGINFO_HOST};
     }
 }
+
+server {
+    listen 80;
+    server_name ${COMMENTVERDICT_TEST_HOST};
+    # Redirect HTTP to HTTPS
+    return 301 https://${COMMENTVERDICT_TEST_HOST};
+}
+
+server {
+    listen 443 ssl http2;
+    server_name test.commentverdict.com;
+
+    ssl_certificate /etc/nginx/certs/commentverdict.com.crt;
+    ssl_certificate_key /etc/nginx/certs/commentverdict.com.key;
+    ssl_trusted_certificate /etc/nginx/certs/commentverdict.com.ca-bundle;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+
+    # Optional security headers
+    #add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    #add_header X-Content-Type-Options nosniff;
+    #add_header X-Frame-Options DENY;
+
+    location / {
+        proxy_pass http://${COMMENTVERDICT_TEST_CONTAINER_ALIAS}:${COMMENTVERDICT_TEST_PORT};
+        proxy_set_header Host ${COMMENTVERDICT_TEST_HOST};
+        #proxy_set_header X-Real-IP $remote_addr;
+        #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #proxy_set_header X-Forwarded-Proto $scheme;
+        #proxy_read_timeout 90;
+    }
+
+    # Optional: static files direct serving
+    # location /static/ {
+    #     alias /path/to/static/;
+    # }
+}

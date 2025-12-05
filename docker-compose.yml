@@ -13,6 +13,9 @@ services:
     environment:
       - CINEKWOK_HOST=cinekwok.com
       - FARFLUNGINFO_HOST=farflunginfo.cinekwok.com
+      - COMMENTVERDICT_TEST_CONTAINER_ALIAS=commentverdict_test_api
+      - COMMENTVERDICT_TEST_HOST=test.commentverdict.com
+      - COMMENTVERDICT_TEST_PORT=8000
       - NGINX_PORT=80
     command: /bin/bash -c "envsubst < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
