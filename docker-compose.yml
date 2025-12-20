@@ -16,6 +16,15 @@ services:
       - COMMENTVERDICT_TEST_CONTAINER_ALIAS=commentverdict_test_api
       - COMMENTVERDICT_TEST_HOST=test.commentverdict.com
       - COMMENTVERDICT_TEST_PORT=8000
+      - COMMENTVERDICT_TEST_FLOWER_HOST=flower-test.commentverdict.com
+      - COMMENTVERDICT_TEST_FLOWER_CONTAINER_ALIAS=focus-guard-flower
+      - COMMENTVERDICT_TEST_FLOWER_PORT=5555
+      - COMMENTVERDICT_WEB_PORTAL_CONTAINER_ALIAS=commentverdict-web-portal
+      - COMMENTVERDICT_WEB_PORTAL_PORT=3000
+      - COMMENTVERDICT_WEB_PORTAL_HOST=app.commentverdict.com
+      - COMMETNVERDICT_PROD_CONTAINER_ALIAS=commentverdict_prod_api
+      - COMMENTVERDICT_PROD_HOST=api.commentverdict.com
+      - COMMENTVERDICT_PROD_PORT=8001
       - NGINX_PORT=80
     command: /bin/bash -c "envsubst < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
