@@ -1,0 +1,24 @@
+upstream commentverdict_web_backend {
+    server ${COMMENTVERDICT_WEB_CONTAINER}:${COMMENTVERDICT_WEB_PORT};
+    keepalive 32;
+}
+
+server {
+    listen 80;
+    server_name ${COMMENTVERDICT_WEB_HOST_1} ${COMMENTVERDICT_WEB_HOST_2};
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ${COMMENTVERDICT_WEB_HOST_1} ${COMMENTVERDICT_WEB_HOST_2};
+    
+    ssl_certificate /etc/nginx/certs/commentverdict.com.fullchain.crt;
+    ssl_certificate_key /etc/nginx/certs/commentverdict.com.key;
+    include /etc/nginx/snippets/ssl-params.conf;
+    
+    location / {
+        proxy_pass http://commentverdict_web_backend;
+        include /etc/nginx/snippets/proxy-params.conf;
+    }
+}
