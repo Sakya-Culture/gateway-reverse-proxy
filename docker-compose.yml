@@ -19,8 +19,8 @@ services:
       - COMMENTVERDICT_TEST_CONTAINER=commentverdict_test_api
       - COMMENTVERDICT_TEST_HOST=test.commentverdict.com
       - COMMENTVERDICT_TEST_PORT=8000
-      - COMMENTVERDICT_FLOWER_CONTAINER=focus-guard-flower
-      - COMMENTVERDICT_FLOWER_HOST=flower-test.commentverdict.com
+      - COMMENTVERDICT_FLOWER_CONTAINER=commentverdict-flower-prod
+      - COMMENTVERDICT_FLOWER_HOST=flower.commentverdict.com
       - COMMENTVERDICT_FLOWER_PORT=5555
       - COMMENTVERDICT_WEB_CONTAINER=commentverdict-web-portal
       - COMMENTVERDICT_WEB_HOST_1=commentverdict.com
@@ -29,6 +29,9 @@ services:
       - COMMENTVERDICT_PROD_CONTAINER=commentverdict_prod_api
       - COMMENTVERDICT_PROD_HOST=api.commentverdict.com
       - COMMENTVERDICT_PROD_PORT=8000
+      - COMMENTVERDICT_GRAFANA_CONTAINER=commentverdict-grafana-prod
+      - COMMENTVERDICT_GRAFANA_HOST=grafana.commentverdict.com
+      - COMMENTVERDICT_GRAFANA_PORT=3000
 
 networks:
   shared_proxy_network:

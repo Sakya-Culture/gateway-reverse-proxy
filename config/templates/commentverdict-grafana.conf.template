@@ -1,0 +1,35 @@
+upstream grafana_backend {
+    server ${COMMENTVERDICT_GRAFANA_CONTAINER}:${COMMENTVERDICT_GRAFANA_PORT};
+}
+
+server {
+    listen 80;
+    server_name ${COMMENTVERDICT_GRAFANA_HOST};
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ${COMMENTVERDICT_GRAFANA_HOST};
+
+    ssl_certificate /etc/nginx/certs/commentverdict.com.fullchain.crt;
+    ssl_certificate_key /etc/nginx/certs/commentverdict.com.key;
+    include /etc/nginx/snippets/ssl-params.conf;
+
+    # Allow larger payloads for dashboard imports
+    client_max_body_size 10m;
+
+    location / {
+        proxy_pass http://grafana_backend;
+        include /etc/nginx/snippets/proxy-params.conf;
+        # Grafana requires the real Host header to match GF_SERVER_ROOT_URL
+        proxy_set_header Host $http_host;
+    }
+
+    # WebSocket support for Grafana live (streaming panels)
+    location /api/live/ {
+        proxy_pass http://grafana_backend;
+        include /etc/nginx/snippets/proxy-params.conf;
+        proxy_set_header Host $http_host;
+    }
+}
