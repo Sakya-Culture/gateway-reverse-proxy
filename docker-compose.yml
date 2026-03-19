@@ -19,7 +19,7 @@ services:
       - COMMENTVERDICT_TEST_CONTAINER=commentverdict_test_api
       - COMMENTVERDICT_TEST_HOST=test.commentverdict.com
       - COMMENTVERDICT_TEST_PORT=8000
-      - COMMENTVERDICT_FLOWER_CONTAINER=commentverdict-flower-prod
+      - COMMENTVERDICT_FLOWER_CONTAINER=focus-guard-flower
       - COMMENTVERDICT_FLOWER_HOST=flower-test.commentverdict.com
       - COMMENTVERDICT_FLOWER_PORT=5555
       - COMMENTVERDICT_WEB_CONTAINER=commentverdict-web-portal
