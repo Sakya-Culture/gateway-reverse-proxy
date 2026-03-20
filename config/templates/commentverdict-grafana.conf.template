@@ -23,14 +23,11 @@ server {
     location / {
         proxy_pass http://grafana_backend;
         include /etc/nginx/snippets/proxy-params.conf;
-        # Grafana requires the real Host header to match GF_SERVER_ROOT_URL
-        proxy_set_header Host $http_host;
     }
 
     # WebSocket support for Grafana live (streaming panels)
     location /api/live/ {
         proxy_pass http://grafana_backend;
         include /etc/nginx/snippets/proxy-params.conf;
-        proxy_set_header Host $http_host;
     }
 }
