@@ -9,7 +9,8 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+    http2 on;
     server_name ${COMMENTVERDICT_PROD_HOST};
 
     ssl_certificate /etc/nginx/certs/commentverdict.com.fullchain.crt;
