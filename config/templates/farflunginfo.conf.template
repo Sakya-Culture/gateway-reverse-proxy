@@ -9,7 +9,8 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+    http2 on;
     server_name ${FARFLUNGINFO_HOST};
     
     ssl_certificate /etc/nginx/certs/cinekwok.cer;
@@ -18,7 +19,6 @@ server {
 
     location / {
         proxy_pass http://drkweb;
-        proxy_set_header Host ${FARFLUNGINFO_HOST};
         include /etc/nginx/snippets/proxy-params.conf;
     }
 }
